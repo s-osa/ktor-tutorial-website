@@ -31,7 +31,8 @@ fun Application.configureRouting() {
                 call.respondRedirect("/articles/${newEntry.id}")
             }
             get("{id}") {
-                // Show an article with a specific  id
+                val id = call.parameters.getOrFail<Int>("id").toInt()
+                call.respond(FreeMarkerContent("show.ftl", mapOf("article" to articles.find { it.id == id })))
             }
             get("{id}/edit") {
                 // Show a page with fields for editing an article
